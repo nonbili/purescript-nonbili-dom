@@ -1,5 +1,6 @@
 module Nonbili.DOM
-  ( fitInputWidth
+  ( copyToClipboard
+  , fitInputWidth
   ) where
 
 import Prelude
@@ -9,6 +10,9 @@ import Data.Maybe (fromMaybe)
 import Effect (Effect)
 import Web.HTML.HTMLElement as HTMLElement
 import Web.DOM.Element as Element
+
+-- | Copy a string to clipbard.
+foreign import copyToClipboard :: String -> Effect Unit
 
 foreign import setStyleWidth :: HTMLElement.HTMLElement -> Int -> Effect Unit
 
