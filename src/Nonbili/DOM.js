@@ -11,3 +11,6 @@ exports.copyToClipboard = value => () => {
 };
 
 exports.setStyleWidth = el => width => () => (el.style.width = width + "px");
+
+exports.setStyleHeight = el => height => () =>
+  (el.style.height = height + "px");

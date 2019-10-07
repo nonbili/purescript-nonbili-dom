@@ -12,3 +12,7 @@ body {
 input {
   width: 100px;
 }
+
+textarea {
+  height: 60px;
+}

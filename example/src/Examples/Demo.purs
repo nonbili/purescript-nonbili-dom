@@ -16,6 +16,7 @@ type Query = Const Void
 
 data Action
   = OnValueInput
+  | OnValueInputTextarea
 
 type State =
   {
@@ -28,14 +29,25 @@ style = HP.attr (HH.AttrName "style")
 
 inputRef = H.RefLabel "input" :: H.RefLabel
 
+textareaRef = H.RefLabel "textarea" :: H.RefLabel
+
 render :: forall m. MonadAff m => State -> H.ComponentHTML Action Slot m
 render state =
   HH.div
   []
-  [ HH.input
-    [ HP.ref inputRef
-    , HP.placeholder "An elastic input"
-    , HE.onValueInput $ Just <<< const OnValueInput
+  [ HH.div_
+    [ HH.input
+      [ HP.ref inputRef
+      , HP.placeholder "An elastic input"
+      , HE.onValueInput $ Just <<< const OnValueInput
+      ]
+    ]
+  , HH.div_
+    [ HH.textarea
+      [ HP.ref textareaRef
+      , HP.placeholder "An elastic textarea"
+      , HE.onValueInput $ Just <<< const OnValueInputTextarea
+      ]
     ]
   ]
 
@@ -60,4 +72,8 @@ handleAction
 handleAction = case _ of
   OnValueInput -> do
     H.getHTMLElementRef inputRef >>= traverse_ \el ->
-      H.liftEffect $ NDOM.fitInputWidth el
+      H.liftEffect $ NDOM.fitInputWidth el 100.0
+
+  OnValueInputTextarea -> do
+    H.getHTMLElementRef textareaRef >>= traverse_ \el ->
+      H.liftEffect $ NDOM.fitTextareaHeight el 60.0

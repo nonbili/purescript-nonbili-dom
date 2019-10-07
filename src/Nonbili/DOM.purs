@@ -1,30 +1,34 @@
 module Nonbili.DOM
   ( copyToClipboard
   , fitInputWidth
+  , fitTextareaHeight
   ) where
 
 import Prelude
 
-import Data.Int as Int
-import Data.Maybe (fromMaybe)
 import Effect (Effect)
-import Web.HTML.HTMLElement as HTMLElement
 import Web.DOM.Element as Element
+import Web.HTML.HTMLElement as HTMLElement
 
 -- | Copy a string to clipbard.
 foreign import copyToClipboard :: String -> Effect Unit
 
-foreign import setStyleWidth :: HTMLElement.HTMLElement -> Int -> Effect Unit
+foreign import setStyleWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
+
+foreign import setStyleHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
 
 -- | Make an <input> elastic, changing width according to content width.
-fitInputWidth :: HTMLElement.HTMLElement -> Effect Unit
-fitInputWidth el = do
-  setStyleWidth el 0
-  clientWidth <- Element.clientWidth ele
-  offsetWidth <- HTMLElement.offsetWidth el
-  let pd = offsetWidth - clientWidth
-  width <- (fromMaybe 0 <<< Int.fromNumber <<< \x -> x + pd) <$>
-    Element.scrollWidth ele
-  setStyleWidth el $ max width 100
-  where
-  ele = HTMLElement.toElement el
+fitInputWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
+fitInputWidth el minWidth = do
+  setStyleWidth el 0.0
+  borderAndPaddingWidth <- HTMLElement.offsetWidth el
+  scrollWidth <- Element.scrollWidth $ HTMLElement.toElement el
+  setStyleWidth el $ max (borderAndPaddingWidth + scrollWidth) minWidth
+
+-- | Make an <textarea> elastic, changing height according to content height.
+fitTextareaHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
+fitTextareaHeight el minHeight = do
+  setStyleHeight el 0.0
+  borderAndPaddingHeight <- HTMLElement.offsetHeight el
+  scrollHeight <- Element.scrollHeight $ HTMLElement.toElement el
+  setStyleHeight el $ max (borderAndPaddingHeight + scrollHeight) minHeight
