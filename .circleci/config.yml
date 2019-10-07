@@ -9,10 +9,10 @@ jobs:
 
       - restore_cache:
           keys:
-          - deps-{{ checksum "bower.json" }}-{{ checksum "examples/bower.json" }}
+          - deps-{{ checksum "bower.json" }}-{{ checksum "example/bower.json" }}
 
       - run:
-          working_directory: examples
+          working_directory: example
           command: |
             git checkout -b gh-pages
             git reset --hard origin/master
@@ -22,10 +22,10 @@ jobs:
 
       - save_cache:
           paths:
-            - examples/node_modules
-            - examples/bower_components
+            - example/node_modules
+            - example/bower_components
             - output
-          key: deps-{{ checksum "bower.json" }}-{{ checksum "examples/bower.json" }}
+          key: deps-{{ checksum "bower.json" }}-{{ checksum "example/bower.json" }}
 
       - run:
           command: |

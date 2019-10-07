@@ -6,7 +6,7 @@ import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(Tuple))
 import Effect (Effect)
 import Effect.Aff.Class (class MonadAff)
-import Examples.Demo as ExpDemo
+import Example.Demo as ExpDemo
 import Foreign.Object as Object
 import Halogen.Aff as HA
 import Halogen.Storybook (Stories, runStorybook, proxy)
