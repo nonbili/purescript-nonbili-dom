@@ -17,7 +17,7 @@ foreign import setStyleWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
 
 foreign import setStyleHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
 
--- | Make an <input> elastic, changing width according to content width.
+-- | Fit <input> width to its content width without showing scrollbar.
 fitInputWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
 fitInputWidth el minWidth = do
   setStyleWidth el 0.0
@@ -25,7 +25,7 @@ fitInputWidth el minWidth = do
   scrollWidth <- Element.scrollWidth $ HTMLElement.toElement el
   setStyleWidth el $ max (borderAndPaddingWidth + scrollWidth) minWidth
 
--- | Make an <textarea> elastic, changing height according to content height.
+-- | Fit <textarea> height to content height without showing scrollbar.
 fitTextareaHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
 fitTextareaHeight el minHeight = do
   setStyleHeight el 0.0
