@@ -15,11 +15,12 @@ import Nonbili.DOM as NDOM
 type Query = Const Void
 
 data Action
-  = OnValueInput
+  = OnValueInput String
   | OnValueInputTextarea
+  | OnClickCopy
 
 type State =
-  {
+  { value :: String
   }
 
 type Slot = ()
@@ -35,13 +36,22 @@ render :: forall m. MonadAff m => State -> H.ComponentHTML Action Slot m
 render state =
   HH.div
   []
-  [ HH.div_
+  [ HH.h3_
+    [ HH.text "Input width will grow as you keep typing"]
+  , HH.div_
     [ HH.input
       [ HP.ref inputRef
       , HP.placeholder "An elastic input"
-      , HE.onValueInput $ Just <<< const OnValueInput
+      , HE.onValueInput $ Just <<< OnValueInput
       ]
+    , HH.button
+      [ HP.title "Copy to clipboard"
+      , HE.onClick $ Just <<< const OnClickCopy
+      ]
+      [ HH.text "Copy"]
     ]
+  , HH.h3_
+    [ HH.text "Textarea height will grow as you keep entering new line"]
   , HH.div_
     [ HH.textarea
       [ HP.ref textareaRef
@@ -53,7 +63,7 @@ render state =
 
 initialState :: State
 initialState =
-  {
+  { value: ""
   }
 
 component :: forall m. MonadAff m => H.Component HH.HTML Query Unit Void m
@@ -70,10 +80,15 @@ handleAction
   => Action
   -> H.HalogenM State Action Slot Void m Unit
 handleAction = case _ of
-  OnValueInput -> do
+  OnValueInput value -> do
+    H.modify_ $ _ { value = value }
     H.getHTMLElementRef inputRef >>= traverse_ \el ->
       H.liftEffect $ NDOM.fitInputWidth el 100.0
 
   OnValueInputTextarea -> do
     H.getHTMLElementRef textareaRef >>= traverse_ \el ->
       H.liftEffect $ NDOM.fitTextareaHeight el 60.0
+
+  OnClickCopy -> do
+    state <- H.get
+    H.liftEffect $ NDOM.copyToClipboard state.value
