@@ -10,7 +10,13 @@ exports.copyToClipboard = value => () => {
   document.body.removeChild(input);
 };
 
+exports.innerHTML = el => () => el.innerHTML;
+
+exports.setInnerHTML = el => html => () => (el.innerHTML = html);
+
 exports.innerText = el => () => el.innerText;
+
+exports.setInnerText = el => text => () => (el.innerText = text);
 
 exports.setStyleWidth = el => width => () => (el.style.width = width + "px");
 

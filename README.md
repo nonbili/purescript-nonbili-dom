@@ -15,6 +15,15 @@ fitInputWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
 -- | Fit <textarea> height to content height without showing scrollbar.
 fitTextareaHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
 
+-- | Get inner HTML of an element.
+innerHTML :: Element -> Effect String
+
+-- | Set inner HTML of an element.
+setInnerHTML :: Element -> String -> Effect Unit
+
 -- | Get rendered text content of an element.
 innerText :: HTMLElement -> Effect String
+
+-- | Set rendered text content of an element.
+setInnerText :: HTMLElement -> String -> Effect Unit
 ```
