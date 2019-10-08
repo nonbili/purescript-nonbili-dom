@@ -2,23 +2,28 @@ module Nonbili.DOM
   ( copyToClipboard
   , fitInputWidth
   , fitTextareaHeight
+  , innerText
   ) where
 
 import Prelude
 
 import Effect (Effect)
 import Web.DOM.Element as Element
+import Web.HTML.HTMLElement (HTMLElement)
 import Web.HTML.HTMLElement as HTMLElement
 
 -- | Copy a string to clipbard.
 foreign import copyToClipboard :: String -> Effect Unit
 
-foreign import setStyleWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
+-- | Get rendered text content of an element.
+foreign import innerText :: HTMLElement -> Effect String
 
-foreign import setStyleHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
+foreign import setStyleWidth :: HTMLElement -> Number -> Effect Unit
+
+foreign import setStyleHeight :: HTMLElement -> Number -> Effect Unit
 
 -- | Fit <input> width to its content width without showing scrollbar.
-fitInputWidth :: HTMLElement.HTMLElement -> Number -> Effect Unit
+fitInputWidth :: HTMLElement -> Number -> Effect Unit
 fitInputWidth el minWidth = do
   setStyleWidth el 0.0
   borderAndPaddingWidth <- HTMLElement.offsetWidth el
@@ -26,7 +31,7 @@ fitInputWidth el minWidth = do
   setStyleWidth el $ max (borderAndPaddingWidth + scrollWidth) minWidth
 
 -- | Fit <textarea> height to content height without showing scrollbar.
-fitTextareaHeight :: HTMLElement.HTMLElement -> Number -> Effect Unit
+fitTextareaHeight :: HTMLElement -> Number -> Effect Unit
 fitTextareaHeight el minHeight = do
   setStyleHeight el 0.0
   borderAndPaddingHeight <- HTMLElement.offsetHeight el

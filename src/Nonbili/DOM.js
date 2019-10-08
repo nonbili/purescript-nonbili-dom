@@ -10,6 +10,8 @@ exports.copyToClipboard = value => () => {
   document.body.removeChild(input);
 };
 
+exports.innerText = el => () => el.innerText;
+
 exports.setStyleWidth = el => width => () => (el.style.width = width + "px");
 
 exports.setStyleHeight = el => height => () =>
