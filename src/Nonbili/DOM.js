@@ -1,5 +1,5 @@
 exports.copyToClipboard = value => () => {
-  const input = document.createElement("input");
+  const input = document.createElement("textarea");
   input.type = "text";
   input.value = value;
   input.style.position = "absolute";

@@ -1,5 +1,6 @@
 # purescript-nonbili-dom
 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/nonbili/purescript-nonbili-dom)](https://github.com/nonbili/purescript-nonbili-dom/releases)
 [![purescript-nonbili-dom on Pursuit](https://pursuit.purescript.org/packages/purescript-nonbili-dom/badge)](https://pursuit.purescript.org/packages/purescript-nonbili-dom)
 [![CircleCI](https://circleci.com/gh/nonbili/purescript-nonbili-dom.svg?style=svg)](https://circleci.com/gh/nonbili/purescript-nonbili-dom)
 
