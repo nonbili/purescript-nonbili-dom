@@ -3,6 +3,7 @@ module Nonbili.DOM
   , fitInputWidth
   , fitTextareaHeight
   , innerHTML
+  , outerHTML
   , setInnerHTML
   , innerText
   , setInnerText
@@ -28,6 +29,9 @@ foreign import setInnerText :: HTMLElement -> String -> Effect Unit
 
 -- | Get inner HTML of an element.
 foreign import innerHTML :: Element -> Effect String
+
+-- | Get outer HTML of an element.
+foreign import outerHTML :: Element -> Effect String
 
 -- | Set inner HTML of an element.
 foreign import setInnerHTML :: Element -> String -> Effect Unit
