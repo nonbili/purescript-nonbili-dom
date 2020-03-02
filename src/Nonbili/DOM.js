@@ -12,6 +12,8 @@ exports.copyToClipboard = value => () => {
 
 exports.innerHTML = el => () => el.innerHTML;
 
+exports.outerHTML = el => () => el.outerHTML;
+
 exports.setInnerHTML = el => html => () => (el.innerHTML = html);
 
 exports.innerText = el => () => el.innerText;
