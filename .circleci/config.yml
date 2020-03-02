@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -9,23 +9,23 @@ jobs:
 
       - restore_cache:
           keys:
-          - deps-{{ checksum "bower.json" }}-{{ checksum "example/bower.json" }}
+          - deps-{{ checksum "example/packages.dhall" }}-{{ checksum "example/package.json" }}
 
       - run:
           working_directory: example
           command: |
             git checkout -b gh-pages
             git reset --hard origin/master
-            yarn add --dev bower purescript pulp
-            yarn
+            yarn add --dev parcel purescript spago
             yarn build
+            git checkout -- package.json
 
       - save_cache:
           paths:
+            - example/.spago
             - example/node_modules
-            - example/bower_components
-            - output
-          key: deps-{{ checksum "bower.json" }}-{{ checksum "example/bower.json" }}
+            - example/output
+          key: deps-{{ checksum "example/packages.dhall" }}-{{ checksum "example/package.json" }}
 
       - run:
           command: |
@@ -37,7 +37,6 @@ jobs:
             git push -q -f https://${GH_PAGES_TOKEN}@github.com/nonbili/purescript-nonbili-dom.git gh-pages
 
 workflows:
-  version: 2
   build-gh-pages:
     jobs:
       - build:

@@ -1,7 +1,6 @@
 ## Development
 
 ```
-yarn
-pulp -w build -I ../src
+spago build -w
 yarn start
 ```
