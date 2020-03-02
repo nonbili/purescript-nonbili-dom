@@ -10,6 +10,7 @@ module Nonbili.DOM
 
 import Prelude
 
+import Control.Apply (lift2)
 import Effect (Effect)
 import Web.DOM.Element (Element)
 import Web.DOM.Element as Element
@@ -37,16 +38,21 @@ foreign import setStyleHeight :: HTMLElement -> Number -> Effect Unit
 
 -- | Fit <input> width to its content width without showing scrollbar.
 fitInputWidth :: HTMLElement -> Number -> Effect Unit
-fitInputWidth el minWidth = do
-  setStyleWidth el 0.0
-  borderAndPaddingWidth <- HTMLElement.offsetWidth el
-  scrollWidth <- Element.scrollWidth $ HTMLElement.toElement el
-  setStyleWidth el $ max (borderAndPaddingWidth + scrollWidth) minWidth
+fitInputWidth hel minWidth = do
+  setStyleWidth hel 0.0
+  borderWidth <- lift2 (-) (HTMLElement.offsetWidth hel) (Element.clientWidth el)
+  scrollWidth <- Element.scrollWidth el
+  setStyleWidth hel $ max (borderWidth + scrollWidth) minWidth
+  where
+  el = HTMLElement.toElement hel
 
 -- | Fit <textarea> height to content height without showing scrollbar.
 fitTextareaHeight :: HTMLElement -> Number -> Effect Unit
-fitTextareaHeight el minHeight = do
-  setStyleHeight el 0.0
-  borderAndPaddingHeight <- HTMLElement.offsetHeight el
-  scrollHeight <- Element.scrollHeight $ HTMLElement.toElement el
-  setStyleHeight el $ max (borderAndPaddingHeight + scrollHeight) minHeight
+fitTextareaHeight hel minHeight = do
+  setStyleHeight hel 0.0
+  borderHeight <- lift2 (-)
+    (HTMLElement.offsetHeight hel) (Element.clientHeight el)
+  scrollHeight <- Element.scrollHeight $ HTMLElement.toElement hel
+  setStyleHeight hel $ max (borderHeight + scrollHeight) minHeight
+  where
+  el = HTMLElement.toElement hel

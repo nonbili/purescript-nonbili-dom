@@ -40,7 +40,8 @@ render state =
     [ HH.text "Input width will grow as you keep typing"]
   , HH.div_
     [ HH.input
-      [ HP.ref inputRef
+      [ style "padding: 0 0.25rem;"
+      , HP.ref inputRef
       , HP.placeholder "An elastic input"
       , HE.onValueInput $ Just <<< OnValueInput
       ]
@@ -54,7 +55,8 @@ render state =
     [ HH.text "Textarea height will grow as you keep entering new line"]
   , HH.div_
     [ HH.textarea
-      [ HP.ref textareaRef
+      [ style "padding: 0.25rem;"
+      , HP.ref textareaRef
       , HP.placeholder "An elastic textarea"
       , HE.onValueInput $ Just <<< const OnValueInputTextarea
       ]
